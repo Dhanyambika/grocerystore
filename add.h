@@ -2,6 +2,7 @@
 
 void add(void)
 {
+	char cc;
 	char item[100];
 	int i;
 	FILE *fp;
