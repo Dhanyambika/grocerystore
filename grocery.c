@@ -14,7 +14,7 @@ void view(void) {
 	FILE *fp;
 	fp=fopen("grocery.txt","r+");
 	if(fp==NULL)
-		printf("Error in creating file");
+		printf("Error in creating file....\n");
 	while((c=fgetc(fp))!=EOF)
 		printf("%c",c);
 	fclose(fp);
@@ -27,7 +27,7 @@ void add(void)
 	FILE *fp;
 	fp=fopen("grocery.txt","a+");
 	if(fp==NULL)
-		printf("Error in creating file");
+		printf("Error in creating file....\n");
 
 	printf("Enter the item to be added\n");
 	scanf("%s",it.name);
@@ -43,8 +43,8 @@ void delete(void)
 	FILE *fp1,*fp2;
 	fp1=fopen("grocery.txt","r");
 	fp2=fopen("new.txt","w");
-	if(fp1||fp2==NULL)
-		printf("Error in creating file");
+	if(fp1==NULL||fp2==NULL)
+		printf("Error in creating file......\n");
 
 	printf("Enter the items to be removed/changed from list\n");
 	scanf("%s",it.name);
@@ -65,10 +65,11 @@ void transaction(void){};
 int main()
 {
 	int i;
-	char ch,c[50];
+	char c;
 	system("clear");
 	printf("WELCOME TO GROCERY SHOP\n");
 
+	do {
 	printf("\n What you wanna do now??\n 1.View items\n 2. Add items to our stock\n 3. Item purchased from our store\n 4.. Total Transaction today\n");
 	scanf("%d",&i);
 CHECK:
@@ -86,9 +87,8 @@ CHECK:
 			scanf("%d",&i);
 			goto CHECK;
 	}
-/*	fflush(stdin);
 	printf("Do you want to continue? Y/N\n");
-	if((ch=fgetc(stdin))=='Y'||'y')
-		main();*/
+	scanf("\n%c",&c);
+	}while('y'==c ||'Y'==c);
 	return 0;
 }
