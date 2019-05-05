@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include <time.h>
 
 typedef struct {
 	char name[20];
@@ -8,6 +9,9 @@ typedef struct {
 	float price;
 	float quantity;
 }item;
+
+int transaction_count;
+
 
 void view(void) {
 	char c;
@@ -60,35 +64,48 @@ void delete(void)
 	rename("new.txt","grocery.txt");
 	fclose(fp2);
 }
-void transaction(void){};
+void transaction(void){
+	printf("Transaction count %d\n",transaction_count);
+};
 
 int main()
 {
 	int i;
 	char c;
+	time_t currentTime;
+	struct tm * timeinfo;
+
 	system("clear");
 	printf("WELCOME TO GROCERY SHOP\n");
-
-	do {
-	printf("\n What you wanna do now??\n 1.View items\n 2. Add items to our stock\n 3. Item purchased from our store\n 4.. Total Transaction today\n");
+	transaction_count = 0;
+	
+	while(1) {
+	time ( &currentTime );
+  	timeinfo = localtime ( &currentTime );
+	printf("\n What you wanna do now??\n 1.View items\n 2. Add items to our stock\n 3. Item purchased from our store\n 4.. Total Transaction today\n 5.. Quit\n");
 	scanf("%d",&i);
 CHECK:
 	switch(i)
 	{
 		case 1:view();
+			transaction_count++;
 			break;
 		case 2:add();
+			transaction_count++;
 			break;
 		case 3:delete();
+			transaction_count++;
 			break;
 		case 4:transaction();
+			printf ( "Last Transaction happened at: %s", asctime (timeinfo) );
+			transaction_count++;
 			break;
+		case 5:printf("Quit");
+			exit(0);
 		default:printf("You entered an invalid option.Choose from the above options\n ");
 			scanf("%d",&i);
 			goto CHECK;
 	}
-	printf("Do you want to continue? Y/N\n");
-	scanf("\n%c",&c);
-	}while('y'==c ||'Y'==c);
+	}
 	return 0;
 }
